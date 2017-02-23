@@ -46,15 +46,19 @@ If you'd like to include images to show how the pipeline works, here is how to i
 
 1. Current pipeline is very sensitive to parameters of Hough transformation. For example, sometimes the line segments are short so small *min_line_length* parameter is needed. But small *min_length_length* may lead to unwanted lines from objects other than lane markers
 
-2. Current pipeline is sensitive to parameters of Canny transformation. This is especially true when some lane markers are in shadow.
+2. Current pipeline is very sensitive to random objects other than lane markers on the road. These objects will be picked up by Canny edge detection and are hard to removed.
 
-3. Current pipeline is sensitive to camera mounting, zoom and other settings. Change of camera settings will change position of lane on the image, so region of interest is changed. Current pipeline uses a predefined region of interest. In some cases unwanted lines are included, therefore the calculated left and right lines of lane may deviate from what they should be.
+3. Current pipeline is sensitive to parameters of Canny detection. This is especially true when some lane markers are in shadow or other objects on the road.
+
+4. Current pipeline is sensitive to camera mounting, zoom and other settings. Change of camera settings will change position of lane on the image, so region of interest is changed. Current pipeline uses a predefined region of interest. In some cases unwanted lines are included, therefore the calculated left and right lines of lane may deviate from what they should be.
 
 
 ###3. Suggest possible improvements to your pipeline
 
-1. Initial images need to be sharpened (modifying image contrast) before further processing. This way lane markers in the shadow will be more obvious, and the pipeline is less dependent on threshold setting of Canny edge detection.
+1. Use cv2.inRange to select yellow and white objects from the image and then start processing. This is to remove other objects that influence finding lane markers. 
 
-2. In Hough transformation, we can only extract line pairs that are in parallel to each other. Because these line pairs are opposite edges of a lane marker. This way we can exclude some random objects (not lane markers) in the region of interest.
+2. Initial images need to be sharpened (modifying image contrast) before further processing. This way lane markers in the shadow will be more obvious, and the pipeline is less dependent on threshold setting of Canny edge detection.
 
-3. Don't use predefined region of interest as image masks. Instead, detect the rough region of interest by color of lane (this assumes that lane color is uniform but it's not ture when the lane is in shadow).
+3. In Hough transformation, we can only extract line pairs that are in parallel to each other. Because these line pairs are opposite edges of a lane marker. This way we can exclude some random objects (not lane markers) in the region of interest.
+
+4. Don't use predefined region of interest as image masks. Instead, detect the rough region of interest by color of lane (this assumes that lane color is uniform but it's not ture when the lane is in shadow).
