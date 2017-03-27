@@ -1,4 +1,4 @@
-#**Finding Lane Lines on the Road** 
+# **Finding Lane Lines on the Road** 
 
 ---
 
@@ -17,7 +17,7 @@ The goals / steps of this project are the following:
 
 ### Reflection
 
-###1. Describe your pipeline. As part of the description, explain how you modified the draw_lines() function.
+### 1. Describe your pipeline. As part of the description, explain how you modified the draw_lines() function.
 
 My pipeline consisted of the following steps: 
 
@@ -42,7 +42,7 @@ If you'd like to include images to show how the pipeline works, here is how to i
 ![example_image][image1]
 
 
-###2. Identify potential shortcomings with your current pipeline
+### 2. Identify potential shortcomings with your current pipeline
 
 1. Current pipeline is very sensitive to parameters of Hough transformation. For example, sometimes the line segments are short so small *min_line_length* parameter is needed. But small *min_length_length* may lead to unwanted lines from objects other than lane markers
 
@@ -53,7 +53,7 @@ If you'd like to include images to show how the pipeline works, here is how to i
 4. Current pipeline is sensitive to camera mounting, zoom and other settings. Change of camera settings will change position of lane on the image, so region of interest is changed. Current pipeline uses a predefined region of interest. In some cases unwanted lines are included, therefore the calculated left and right lines of lane may deviate from what they should be.
 
 
-###3. Suggest possible improvements to your pipeline
+### 3. Suggest possible improvements to your pipeline
 
 1. Use cv2.inRange to select yellow and white objects from the image and then start processing. This is to remove other objects that influence finding lane markers. 
 
